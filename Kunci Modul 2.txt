@@ -1,0 +1,87 @@
+1. 
+CREATE DATABASE resto;
+USE resto;
+
+2. 
+CREATE TABLE minuman (
+  idMinuman INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  namaMinuman VARCHAR(30) NOT NULL
+);
+
+3.
+CREATE TABLE karyawan (
+  idkaryawan INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  namaKaryawan VARCHAR(30)
+);
+
+4. 
+CREATE TABLE pelanggan (
+  idPelanggan INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  namaPelanggan VARCHAR(30)
+);
+
+5. 
+ALTER TABLE minuman 
+ADD harga INT DEFAULT 10000;
+
+6. 
+RENAME TABLE minuman TO menu;
+
+7. 
+ALTER TABLE menu
+CHANGE COLUMN idMinuman idMenu INT AUTO_INCREMENT;
+
+ALTER TABLE menu
+CHANGE COLUMN namaMinuman namaMenu VARCHAR(30);
+
+8. 
+ALTER TABLE pelanggan
+ADD noHP VARCHAR(15);
+
+9. 
+ALTER TABLE pelanggan
+ADD nik VARCHAR(16) NOT NULL;
+
+10.
+ALTER TABLE karyawan
+ADD usia VARCHAR(5);
+
+11.
+ALTER TABLE karyawan
+ADD gender ENUM('M','F');
+
+12. 
+ALTER TABLE karyawan
+CHANGE COLUMN usia usia INT; 
+
+13. 
+ALTER TABLE pelanggan
+DROP COLUMN nik;
+
+14. 
+CREATE INDEX idxMenu 
+ON menu(namaMenu);
+
+15. 
+CREATE TABLE menu2 LIKE menu;
+
+16.
+INSERT INTO menu VALUES
+('','Vanilla Milkshake',15000),
+('','Sirloin Steak',26000),
+('','Fruit Selection',17000);
+
+INSERT INTO karyawan VALUES
+('','Eko',30,'M'),
+('','Eki',28,'M'),
+('','Eka',27,'F');
+
+INSERT INTO pelanggan VALUES
+('','Obama','08123456789'),
+('','Trump','08987654321'),
+('','Biden','081122334455');
+
+17. Tidak ada satupun yang bisa. 
+
+18. 
+TRUNCATE menu;

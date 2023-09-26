@@ -1,0 +1,47 @@
+1.
+CREATE TABLE registrasi (
+     nim INT(4),
+     idMtk VARCHAR(7),
+     grup CHAR(1),
+     semester VARCHAR(5),
+     tahun VARCHAR(4),
+     nilaiAngka FLOAT(4,2),
+     PRIMARY KEY(nim, idMtk, grup, semester, tahun)
+);
+
+INSERT INTO registrasi VALUES
+(1234,'TI-101','A','Gasal','2022',86.55),
+(1212,'TI-190','B','Gasal','2022',84.03),
+(2211,'SI-201','A','Genap','2022',72.76),
+(1414,'SI-290','A','Genap','2022',62.56),
+(4321,'TI-101','B','Genap','2022',65.93),
+(2222,'TI-190','B','Gasal','2022',90.00),
+(1212,'TI-101','A','Gasal','2022',80.47),
+(1234,'TI-190','A','Gasal','2022',78.20);
+
+2. 
+SELECT nim FROM registrasi WHERE idMtk='TI-190' AND semester='Gasal' AND tahun='2022';
+
+3. 
+SELECT idMtk FROM registrasi WHERE semester='Genap' AND tahun='2022';
+
+4.
+SELECT CONCAT(nim,' - ',idMtk,' - ',nilaiAngka) AS KHS FROM registrasi;
+
+5. 
+SELECT * FROM registrasi ORDER BY nilaiAngka DESC;
+
+6. 
+SELECT * FROM registrasi WHERE idMtk<>'SI-201';
+
+7.
+SELECT nim, idMtk, grup, nilaiAngka FROM registrasi WHERE nilaiAngka BETWEEN 70 AND 80;
+
+8.
+SELECT nim, idMtk, grup, semester, tahun, nilaiAngka, IF(nilaiAngka>80,'Cool!','Uncool!') AS predikat FROM registrasi;
+
+9. 
+Menghubungkan dengan tabel mahasiswa sehingga bisa didapat data nama mahasiswanya.
+
+10. 
+Menghubungkan dengan tabel matakuliah sehingga bisa didapat data SKS-nya.

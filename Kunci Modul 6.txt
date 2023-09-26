@@ -1,0 +1,106 @@
+6.1 & 6.2
+create database dwstore;
+
+use dwstore;
+
+create table customer (
+     cust_id INT PRIMARY KEY AUTO_INCREMENT,
+     cust_name VARCHAR(20) NOT NULL,
+     cust_dob DATE NOT NULL,
+     cust_email VARCHAR(20) UNIQUE);
+
+INSERT INTO customer VALUES
+     (1, 'wanto', '2000-01-01', 'wanto@gmail.com'),
+     (2, 'wanti', '2000-07-01', 'wanti@gmail.com'),
+     (3, 'theo', '1999-08-14', 'theo@gmail.com');
+
+CREATE TABLE employees (
+     emp_id VARCHAR(3) PRIMARY KEY,
+     emp_name VARCHAR(30) NOT NULL,
+     emp_phone VARCHAR(15) NOT NULL);
+
+INSERT INTO employees VALUES
+     ('E01', 'roger', '087722223333'),
+     ('E02', 'rika', '085644442222'),
+     ('E03', 'rupawan', '089877776666');
+
+CREATE TABLE item (
+     item_id VARCHAR(5) PRIMARY KEY,
+     item_name VARCHAR(50) NOT NULL,
+     item_price INT NOT NULL);
+
+INSERT INTO item VALUES
+('IT001','Apple iPhone 11',17600000),
+('IT002','Xiaomi Mi 9',7500000),
+('IT003','Samsung S10',11230000),
+('IT004','Oppo F11',4500000),
+('IT005','Vivo Nex3',5375000),
+('IT006','Nokia 3310',750000),
+('IT007','Nokia n-Gage',1200000);
+
+CREATE TABLE orders (
+     invoice_no INT PRIMARY KEY AUTO_INCREMENT,
+     order_date DATETIME,
+     cust_id INT,
+     emp_id VARCHAR(3),
+     CONSTRAINT cust_fk FOREIGN KEY (cust_id) REFERENCES customer(cust_id),
+     CONSTRAINT emp_fk FOREIGN KEY (emp_id) REFERENCES employees(emp_id));
+
+INSERT INTO orders VALUES 
+     (1,NOW(),1,'E01'),
+     (2,NOW(),2,'E03'),
+     (3,NOW(),3,'E02');
+
+CREATE TABLE detail_orders (
+     detail_id INT PRIMARY KEY AUTO_INCREMENT,
+     invoice_no INT NOT NULL,
+     item_id VARCHAR(5) NOT NULL,
+     quantity INT NOT NULL,
+     CONSTRAINT invoice_fk FOREIGN KEY (invoice_no) REFERENCES orders(invoice_no),
+     CONSTRAINT item_fk FOREIGN KEY (item_id) REFERENCES item(item_id));
+
+INSERT INTO detail_orders VALUES
+(1,1,'IT001',1),
+(2,1,'IT002',2),
+(3,2,'IT001',1),
+(4,2,'IT003',3),
+(5,2,'IT004',1),
+(6,3,'IT005',5);
+
+6.3 
+UPDATE employees SET emp_name = 'roger murtaugh' WHERE emp_id='E01';
+
+6.4 
+DELETE FROM item WHERE item_name LIKE 'Nokia%';
+
+6.5
+SELECT employees.emp_name 
+FROM employees INNER JOIN orders ON employees.emp_id = orders.emp_id
+INNER JOIN detail_orders ON orders.invoice_no = detail_orders.invoice_no
+INNER JOIN item ON detail_orders.item_id = item.item_id
+WHERE item_name LIKE 'Apple%';
+
+6.6
+SELECT item.item_name 
+FROM item INNER JOIN detail_orders ON item.item_id = detail_orders.item_id
+INNER JOIN orders ON detail_orders.invoice_no = orders.invoice_no
+INNER JOIN customer ON orders.cust_id = customer.cust_id
+WHERE customer.cust_name = 'wanti';
+
+6.7 
+SELECT customer.cust_name
+FROM customer INNER JOIN orders ON customer.cust_id = orders.cust_id
+INNER JOIN employees ON employees.emp_id = orders.emp_id
+WHERE emp_name = 'rupawan';
+
+6.8
+CREATE VIEW viewNota AS SELECT o.invoice_no, c.cust_name, c.cust_email, i.item_name, i.item_price, do.quantity, i.item_price*do.quantity as item_subtotal, e.emp_name
+FROM orders o, customer c, employees e, detail_orders do, item i
+WHERE o.cust_id=c.cust_id
+AND o.emp_id=e.emp_id
+AND o.invoice_no=do.invoice_no
+AND do.item_id=i.item_id
+ORDER BY 1;
+
+6.9
+UPDATE customer SET cust_email = 'superwanto@gmail.com' WHERE cust_id = 1;

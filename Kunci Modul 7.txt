@@ -1,0 +1,48 @@
+// BAGIAN TEORI
+
+CREATE DATABASE luke_p7;
+
+USE luke_p7;
+
+CREATE TABLE dosen (
+     nip INT PRIMARY KEY,
+     namaPegawai VARCHAR(150),
+     namaProdi VARCHAR(100),
+     gajiTahunan FLOAT
+     );
+
+INSERT INTO dosen VALUES 
+(10101,	'Sriyanto','Informatika',66000000),
+(12121,	'Wahyu','Akuntansi',75000000),
+(15151,	'Mozart','Sistem Informasi',68000000),
+(22222,	'Einstein','Desain Produk',60000000),
+(32343,	'Spielberg','Arsitektur',62000000),
+(33456,	'Lucas','Kedokteran',95000000),
+(44565,	'Katz','Biologi',79000000),
+(58583,	'Charles','Informatika',83000000),
+(76543,	'Simon','Biologi',85000000),
+(76766,	'Peter','Sistem Informasi',75000000),
+(83821,	'Bagong','Manajemen',66000000),
+(98345,	'Karyono','Pendidikan Bahasa',76000000);
+
+Kunci Jawaban:
+
+1. SELECT namaProdi, MAX(ipk) FROM mahasiswa GROUP BY namaProdi;
+
+2. SELECT gender, AVG(ipk) FROM mahasiswa GROUP BY gender; 
+
+3. SELECT namaProdi, GROUP_CONCAT(nama) AS listMahasiswa FROM mahasiswa WHERE gender = 'L' GROUP BY namaProdi;
+
+4. SELECT namaProdi, COUNT(*) FROM mahasiswa GROUP BY namaProdi;
+
+5. SELECT namaProdi, COUNT(*) FROM mahasiswa WHERE sksTotal > 80 GROUP BY namaProdi;
+
+6. SELECT YEAR(tglLahir) AS tahunLahir, COUNT(*) AS jumlahMhs FROM mahasiswa GROUP BY tahunLahir;
+
+7. SELECT nama, sksTotal FROM mahasiswa WHERE sksTotal = (SELECT MAX(sksTotal) FROM mahasiswa);
+
+8. SELECT * FROM mahasiswa WHERE ipk > (SELECT AVG(ipk) FROM mahasiswa) AND gender = 'P';
+
+9. SELECT namaProdi, AVG(ipk) FROM mahasiswa GROUP BY namaProdi HAVING AVG(ipk) > 2.75;
+
+10. SELECT AVG(ipk) FROM mahasiswa WHERE sksTotal < 60;

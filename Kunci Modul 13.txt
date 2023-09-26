@@ -1,0 +1,78 @@
+1.a
+CREATE PROCEDURE getOfficeByCountry(IN countryName VARCHAR(255))
+BEGIN
+    SELECT * FROM offices WHERE country=countryName;
+END;
+
+1.b
+CALL getOfficeByCountry('USA');
+
+1.c
+create procedure countOrderByStatus
+    (IN orderStatus VARCHAR(25),
+     OUT total INT)
+BEGIN
+    SELECT COUNT(*) INTO total FROM orders WHERE status=orderStatus;
+end;
+
+1.d
+CALL countOrderByStatus('Shipped',@itung);
+SELECT @itung;
+
+1.e
+CREATE PROCEDURE set_counter
+    (INOUT count INT(4),
+     IN inc INT(4))
+BEGIN
+	SET count = count + inc;
+END
+
+1.f
+SET @counter = 1;
+CALL set_counter(@counter,1); -- 2
+CALL set_counter(@counter,1); -- 3
+CALL set_counter(@counter,5); -- 8
+SELECT @counter; -- 8
+
+2.a
+create procedure getCustomerLevel
+    (IN pr_customerNumber int, OUT pr_customerLevel VARCHAR(15))
+BEGIN
+    DECLARE tampung DECIMAL(10,2);
+    SELECT creditLimit INTO tampung
+        FROM customers
+            WHERE customerNumber = pr_customerNumber;
+
+    IF tampung > 50000 then
+        SET pr_customerLevel = 'PLATINUM';
+    ELSEIF (tampung <=50000 AND tampung >=10000) THEN
+        SET pr_customerLevel = 'GOLD';
+    ELSE SET pr_customerLevel = 'SILVER';
+    END IF;
+end;
+
+2.b
+CALL getCustomerLevel(103,@hasil);
+SELECT @hasil;
+
+3.a
+create procedure getCustomerShipping
+    (IN pr_customerNumber int,
+     OUT pr_shipping VARCHAR(15))
+BEGIN
+    DECLARE tampungCountry VARCHAR(50);
+
+    SELECT country INTO tampungCountry
+        FROM customers
+            WHERE customerNumber = pr_customerNumber;
+
+    CASE tampungCountry
+        WHEN 'USA' THEN SET pr_shipping = '2-days shipping';
+        WHEN 'Canada' THEN SET pr_shipping = '3-days shipping';
+        ELSE SET pr_shipping = '5-days shipping';
+    END CASE;
+end;
+
+3.b
+CALL getCustomerShipping(173,@kirim);
+SELECT @kirim;

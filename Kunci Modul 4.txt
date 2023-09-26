@@ -1,0 +1,81 @@
+Latihan 1.1
+CREATE DATABASE nama_p4;
+USE nama_p4;
+CREATE TABLE peminjam (
+	idPeminjam VARCHAR(6) PRIMARY KEY,
+	namaPeminjam VARCHAR(50),
+	noTelp VARCHAR(13),
+	limitPinjam INT,
+	tglBalik DATE
+);
+
+Latihan 1.2
+INSERT INTO peminjam VALUES
+('AA0010','DIMAS','081722348828',4,'2022-09-01'),
+('AA0011','GILBERT','085834241234',2,null),
+('AA0012','LINTANG','087734643464',5,'2022-09-10');
+
+Latihan 1.3
+INSERT IGNORE INTO peminjam VALUES
+('AA0012','MICHAEL','087734643466',3,'2022-09-05');
+
+Latihan 1.4
+INSERT INTO peminjam VALUES
+('AA0012','MICHAEL','087734643466',3,'2022-09-05') 
+ON DUPLICATE KEY UPDATE 
+namaPeminjam='MICHAEL',
+noTelp='087734643466',
+limitPinjam=3,
+tglBalik='2022-09-05';
+--> berhasil UPDATE
+
+INSERT INTO peminjam VALUES
+('AB0012','CYNTHIA','08112283232',5,'2022-09-11') 
+ON DUPLICATE KEY UPDATE
+namaPeminjam='CYNTHIA',
+noTelp='08112283232',
+limitPinjam=5,
+tglBalik='2022-09-11';
+--> berhasil INSERT DATA BARU
+
+Latihan 2.1
+UPDATE peminjam SET limitPinjam = limitPinjam * 2;
+
+Latihan 2.2
+UPDATE peminjam SET tglBalik = null WHERE tglBalik < '2022-09-10';
+
+Latihan 2.3
+UPDATE peminjam SET namaPeminjam = 'CYNTIA', noTelp = '08133223322'
+WHERE idPeminjam = 'AB0012';
+
+Latihan 3.1
+DELETE FROM peminjam WHERE tglBalik IS NULL LIMIT 2;
+
+Latihan 3.2
+DELETE FROM peminjam WHERE limitPinjam >= 10;
+
+Latihan 4.1
+ALTER TABLE movie CHANGE COLUMN movieRating movieRating FLOAT;
+UPDATE movie SET movieRating = movieRating * 2;
+
+Latihan 4.2
+update movie set moviecertificate = 'N/A', movieRating = 9.2 where movieID=2;
+
+Latihan 4.3
+DELETE FROM artiste WHERE artisteNationality = 'German'
+--> Hans Zimmer salah tulis Germamn
+
+Latihan 4.4 
+INSERT INTO movie VALUES
+(11,'Batman Begins','Batman dilatih Qui Gon Jinn','2005-06-23',140,'15',8.2),
+(12,'Thor','Thor Odinson jatuh ke bumi untuk pertama kali','2011-11-03',115,'PG',7.0);
+
+Latihan 4.5
+Satu movieID di tabel movie berelasi dengan lebih dari satu movie_studioID di tabel movie_studio.
+Satu movie_studioID berelasi dengan satu movieID di tabel movie.
+
+Satu studioID di tabel studio berelasi dengan lebih dari satu movie_studioID di tabel movie_studio.
+Satu movie_studioID berelasi dengan satu studioID di tabel studio.
+
+Latihan 4.6
+Sebagai jembatan untuk menampung hubungan many-to-many antara tabel movie dengan tabel studio.
