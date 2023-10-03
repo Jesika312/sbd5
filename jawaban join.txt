@@ -1,0 +1,44 @@
+nomor 1 SELECT obat.nama_obat,resep_obat.id_obat FROM obat INNER JOIN Resep_Obat ON Obat.id_obat = Resep_Obat.id_obat;
+2
+SELECT Obat.nama_obat,obat.id_obat FROM Obat LEFT JOIN Resep_Obat ON Obat.id_obat = Resep_Obat.id_obat WHERE Resep_Obat.id_obat IS NULL;
+
+nomor 5
+SELECT Obat.nama_obat,obat.id_obat,satuan_obat FROM Obat WHERE satuan_obat='ml';
+
+nomo 6 SELECT berobat.id_pasien, berobat.id_dokter, obat.nama_obat FROM berobat INNER JOIN resep_obat ON berobat.id_berobat = resep_obat.id_berobat INNER JOIN obat ON resep_obat.id_obat = obat.id_obat INNER JOIN pasien ON berobat.id_pasien = pasien.id_pasien;
+
+nomor 7
+SELECT Berobat.id_pasien, Berobat.id_dokter, Obat.nama_obat FROM Berobat LEFT JOIN Resep_Obat ON Berobat.id_berobat = Resep_Obat.id_berobat LEFT JOIN Obat ON Resep_Obat.id_obat = Obat.id_obat;
+
+nomor 8 
+SELECT Berobat.id_pasien, Berobat.id_dokter, Berobat.tgl_berobat, Berobat.keluhan_pasien, Berobat.hasil_diagnosa, Berobat.pelaksanaan_pengobatan FROM Berobat LEFT JOIN Resep_Obat ON Berobat.id_berobat = Resep_Obat.id_berobat WHERE Resep_Obat.id_obat IS NULL;
+
+nomor 9
+SELECT Berobat.id_berobat, Pasien.nama_pasien, Dokter.nama_dokter, Berobat.tgl_berobat, Berobat.keluhan_pasien, Berobat.hasil_diagnosa, Berobat.pelaksanaan_pengobatan FROM Berobat INNER JOIN Pasien ON Berobat.id_pasien = Pasien.id_pasien INNER JOIN Dokter ON Berobat.id_dokter = Dokter.id_dokter;
+
+nomor 10
+SELECT Dokter.id_dokter, Dokter.nama_dokter FROM Dokter LEFT JOIN Berobat ON Dokter.id_dokter = Berobat.id_dokter WHERE Berobat.id_berobat IS NULL;
+
+nomor 11
+SELECT Obat.nama_obat FROM Obat INNER JOIN Resep_Obat ON Obat.id_obat = Resep_Obat.id_obat INNER JOIN Berobat ON Resep_Obat.id_berobat = Berobat.id_berobat INNER JOIN Dokter ON Berobat.id_dokter = Dokter.id_dokter WHERE Dokter.nama_dokter = 'Lukas Chrisantyo';
+
+nomor 12
+SELECT CONCAT('Dokter ', Dokter.nama_dokter, ' mengobati sakit pasien ', Pasien.nama_pasien) AS Informasi FROM Berobat INNER JOIN Dokter ON Berobat.id_dokter = Dokter.id_dokter INNER JOIN Pasien ON Berobat.id_pasien = Pasien.id_pasien;
+
+nomor 13
+SELECT Pasien.nama_pasien
+FROM Berobat
+INNER JOIN Pasien ON Berobat.id_pasien = Pasien.id_pasien
+WHERE Berobat.pelaksanaan_pengobatan = 'Rawat Inap';
+
+nomor 14
+SELECT Obat.nama_obat
+FROM Obat
+INNER JOIN Resep_Obat ON Obat.id_obat = Resep_Obat.id_obat
+INNER JOIN Berobat ON Resep_Obat.id_berobat = Berobat.id_berobat
+INNER JOIN Pasien ON Berobat.id_pasien = Pasien.id_pasien
+WHERE Pasien.nama_pasien = 'roger';
+
+nomor 15
+SELECT Dokter.nama_dokter, IFNULL(Pasien.nama_pasien, '-') AS nama_pasien FROM Dokter LEFT JOIN Berobat ON Dokter.id_dokter = Berobat.id_dokter LEFT JOIN Pasien ON Berobat.id_pasien = Pasien.id_pasien;
+

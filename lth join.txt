@@ -1,0 +1,39 @@
+1. CREATE TABLE dokter ( id_dokter varchar(3) NOT null primary key, nama_dokter varchar(50), telp_dokter varchar(15));
+
+CREATE table pasien (
+ id_pasien varchar (3) not null primary key,
+nama_pasien varchar(50),
+alamat_pasien varchar(255),
+email varchar(50));
+
+CREATE TABLE obat ( id_obat varchar(3) NOT null primary key, nama_obat varchar(50), ukuran_obat int(11), satuan_obat enum('mg','ml','g'));
+
+CREATE table Berobat( id_berobat int(11) not null primary key auto_increment, id_pasien varchar(3), id_dokter varchar(3), index(id_pasien), index(id_dokter), tgl_berobat date, keluhan_pasien varchar(255), hasil_diagnosa varchar(255), pelaksanaan_pengobatan enum('Rawat Jalan','Rawat Inap','Rujuk','Lainnya'), constraint id_pasienFk Foreign key (id_pasien) references pasien(id_pasien), constraint id_dokterFk foreign key (id_dokter) references dokter(id_dokter) on DELETE cascade on UPDATE cascade);
+
+CREATE table resep_obat( id_obat varchar(3) NOT null, id_berobat int(11) NOT null, primary key (id_obat,id_berobat), constraint id_berobatFk Foreign key (id_berobat) references berobat(id_berobat), constraint id_obatFk Foreign key (id_obat) references obat(id_obat));
+
+note:
+ALTER TABLE resep_obat
+ADD CONSTRAINT id_berobatFk FOREIGN KEY (id_berobat) REFERENCES
+berobat(id_berobat),
+ADD CONSTRAINT id_obatFk FOREIGN KEY (id_obat) REFERENCES
+obat(id_obat)
+ON DELETE restrict
+ON UPDATE restrict;
+
+note:
+ALTER TABLE resep_obat DROP foreign key id_berobatFk, DROP foreign key id_obatFk;
+
+2. INSERT into Obat(id_obat, nama_obat, ukuran_obat,satuan_obat) values(001,"Simvastatin",10,"mg"), (002,"Sanmol",500,"mg"), (003,"Cendo Lyteers Eye Drops",15,"ml"), (004,"Counterpain Cool Gel",15,"g"), (005,"Neo Kaolana Sirup",120,"ml");
+
+INSERT INTO pasien(id_pasien, nama_pasien, alamat_pasien, email) VALUES ('P01','roger','Jl. Mawar no 10','roger@email.com'), ('P02','rika','Jl. Anggur no 40','rika@email.com'), ('P03','rupawan','Gang Matahari I no 90','rupawan@email.com');
+
+
+INSERT INTO dokter (id_dokter, nama_dokter, telp_dokter) VALUES ('D01','Nila Anggia','081277777771'), ('D02','Agata Filiana','081277777772'), ('D03','Rosa Delima','081277777773'), ('D04','Lukas Chrisantyo','081277777774');
+
+INSERT INTO berobat(id_pasien, id_dokter,tgl_berobat, keluhan_pasien, hasil_diagnosa, pelaksanaan_pengobatan) VALUES ('P01','D03',NOW(),'pusing,demam','flu','Rawat Jalan'), ('P02','D04',NOW(),'sering buang air','diare','Rawat Inap'), ('P03','D04',NOW(),'kecelakaan','patah tulang','Rujuk');
+
+
+INSERT INTO resep_obat(id_berobat, id_obat) VALUES (1,'002'), (1,'001'), (2,'005');
+
+3. 
